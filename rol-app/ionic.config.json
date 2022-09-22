@@ -1,0 +1,7 @@
+{
+  "name": "RolApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
