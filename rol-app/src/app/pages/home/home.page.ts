@@ -30,10 +30,6 @@ export class HomePage {
   }
 
   public async onClick() {
-    console.log("clicked");
-  }
-
-  public async pressed() {
-    console.log("pressed");
+      console.log("clicked");
   }
 }
