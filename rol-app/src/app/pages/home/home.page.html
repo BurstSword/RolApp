@@ -1,11 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Inbox
+      Your games
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
- 
+  <ion-card *ngFor="let game of gameList" (click)="onClick()" (press)="pressed()">
+    <ion-card-header>
+      <ion-card-title>{{game.name}}</ion-card-title>
+      <ion-card-subtitle>Created: {{game.createdDate | date:"mediumDate"}}</ion-card-subtitle>
+      <ion-card-subtitle>Last save: {{game.lastSaved | date:"mediumDate"}}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-margin">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="secondary" (click)="addNewGame()">
+        <ion-icon name="game-controller-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="secondary">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

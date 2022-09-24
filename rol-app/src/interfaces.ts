@@ -6,7 +6,8 @@ export interface Entity{
     currentHp:number,
     maxHp:number,
     image:string,
-    attacks:Attack[]
+    attacks:Attack[],
+    isPlayer:boolean
 }
 
 export interface Status{
@@ -31,4 +32,6 @@ export interface Dice{
 export interface Game{
     name:string,
     entities:Entity[],
+    createdDate:Date,
+    lastSaved:Date
 }
