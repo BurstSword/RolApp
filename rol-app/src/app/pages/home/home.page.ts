@@ -30,10 +30,10 @@ export class HomePage {
   }
 
   public async onClick() {
-    const toast = await this.toastController.create({
-      message: 'onClick.',
-      duration: 2000
-    });
-    toast.present();
+    console.log("clicked");
+  }
+
+  public async pressed() {
+    console.log("pressed");
   }
 }
