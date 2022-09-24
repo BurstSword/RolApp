@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Game } from 'src/interfaces';
 
 @Component({
@@ -9,7 +9,7 @@ import { Game } from 'src/interfaces';
 })
 
 export class HomePage {
-  constructor(public toastController:ToastController) {}
+  constructor(public toastController:ToastController, private alertController: AlertController) {}
 
   public gameList:Game[]=[]
 
@@ -30,6 +30,32 @@ export class HomePage {
   }
 
   public async onClick() {
-      console.log("clicked");
+    console.log("clicked");
+  }
+
+  public async deleteGame() {
+    console.log("deleteGame");
+
+    const alert = await this.alertController.create({
+      header: 'Delete game',
+      subHeader: 'Not reversible',
+      message: 'Are you sure you want to delete the game? Any templates you are using inside will not be deleted.',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log("Cancelled");
+        },
+      },
+      {
+        text: 'OK',
+        role: 'confirm',
+        handler: () => {
+          console.log("Okayed");
+        },
+      }],
+    });
+
+    await alert.present();
   }
 }
