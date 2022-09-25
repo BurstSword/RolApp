@@ -1,5 +1,8 @@
+//If an Entity has uid, it's a player/monster
+//If an Entity has templateid and NO uid, it's a template
 export interface Entity{
     uid:string,
+    templateid:string,
     name:string,
     statuses:Status[],
     initiative:number,
@@ -30,8 +33,10 @@ export interface Dice{
 }
 
 export interface Game{
+    uid:string,
     name:string,
     entities:Entity[],
     createdDate:Date,
-    lastSaved:Date
+    lastSaved:Date,
+    currentTurn?:string
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Game } from 'src/interfaces';
+import { FakedataService } from 'src/app/services/fakedata.service';
+import { Entity, Game } from 'src/interfaces';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-home',
@@ -11,30 +13,66 @@ import { Game } from 'src/interfaces';
 export class HomePage {
   constructor(public toastController:ToastController, private alertController: AlertController) {}
 
-  public gameList:Game[]=[]
+  ngOnInit() {
+    console.log(FakedataService.gameList[0].uid)
+    console.log(FakedataService.gameList[1].uid)
+    console.log(FakedataService.gameList[2].uid)
+  }
+
+  public gameList:Game[] = FakedataService.gameList
 
   public async addNewGame() {
-    var newGame:Game = {
-      name:"My first game",
-      entities:[],
-      createdDate: new Date("2022-09-21"),
-      lastSaved: new Date("2022-09-23")
-    }
-    this.gameList.push(newGame);
+    await this.alertCreateGame()
+  }
 
-    const toast = await this.toastController.create({
-      message: 'Game added.',
-      duration: 2000
+  private async alertCreateGame() {
+    console.log(this)
+    const alert = await this.alertController.create({
+      header: 'Create a new Game',
+      inputs: [
+        {
+          name:"name",
+          placeholder: 'Name (max 15 characters)',
+          attributes: {
+            maxlength: 15,
+          },
+        }
+      ],
+      buttons: [{
+        text: 'OK',
+        role: 'confirm',
+        handler: this.createNewGameAfterAlert,
+      }],
     });
-    toast.present();
+
+    await alert.present();
+  }
+
+  public createNewGameAfterAlert(res:any) {
+
+    if (res.name) {
+      console.log(res.name)
+
+      FakedataService.gameList.push(
+        {
+          uid:uuidv4(),
+          name:res.name,
+          entities:[],
+          createdDate: new Date("2022-07-30"),
+          lastSaved: new Date("2022-09-23"),
+          currentTurn: "sdfsf"
+        }
+      )
+    }
   }
 
   public async onClick() {
     console.log("clicked");
   }
 
-  public async deleteGame() {
+  public async deleteGame(idToDelete) {
     console.log("deleteGame");
+    console.log("ID to Delete: "+idToDelete)
 
     const alert = await this.alertController.create({
       header: 'Delete game',
@@ -50,12 +88,28 @@ export class HomePage {
       {
         text: 'OK',
         role: 'confirm',
-        handler: () => {
-          console.log("Okayed");
+        handler: async () => {
+          console.log("ID to Delete inside handler: " + idToDelete)
+          var indexToDelete:number = FakedataService.gameList.findIndex(x => x.uid == idToDelete);
+          if (indexToDelete > -1) {
+            console.log(indexToDelete);
+            FakedataService.gameList.splice(indexToDelete, 1)
+            await this.showToast("Game deleted succesfully");
+          } else {
+            await this.showToast("There was an error.");
+          }
         },
       }],
     });
 
     await alert.present();
+  }
+
+  private async showToast(text:string) {
+    var toast = await this.toastController.create({
+      message: text,
+      duration: 2000
+    });
+    toast.present();
   }
 }
