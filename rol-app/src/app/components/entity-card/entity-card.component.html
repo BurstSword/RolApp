@@ -1,0 +1,58 @@
+<ion-card>
+  <ion-card-header>
+
+    <div class="d-flex justify-content-between" style="width: 100%;">
+      <div class="d-flex justify-content-between">
+        <!-- <img class="rounded-circle shadow-4" style="display: inline-block; width: 75px;"
+          src="https://www.w3schools.com/howto/img_avatar.png" alt=""> -->
+        <ion-thumbnail>
+          <img src="https://www.w3schools.com/howto/img_avatar.png" />
+        </ion-thumbnail>
+        <p style="margin:1em;">{{entity.name}}</p>
+      </div>
+      <h1 style="display: inline-block; align-self: flex-end;">{{entity.initiative}}</h1>
+    </div>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <div class="d-flex">
+      <div id="COLORES" *ngFor="let item of entity.statuses"
+        style="width: auto; background-color: '{{item.color}}'; border-radius: 18%; margin-left: 2%;">{{item.tag}}</div>
+    </div>
+
+    <div class="d-flex justify-content-between" style="margin-bottom: -25px !important;">
+      <div style="display: inline-block; width: 80%;">
+        <ion-range #hpRange [ticks]="false" [snaps]="false" pin="true" [value]="entity.currentHp" [min]="0"
+          [max]="entity.maxHp"></ion-range>
+      </div>
+
+      <div style="width: 20%;">
+        <ion-select>
+          <ion-select-option *ngFor="let item of entity.attacks" value="{{item.name}}">{{item.name}}</ion-select-option>
+        </ion-select>
+      </div>
+      
+    </div>
+    <div class="d-flex justify-content-around " style="width: 80%;">
+      <ion-button style="width: auto; margin-left: 2%; color: white;" (click)="calculateHp(-1)" expand="block"
+        fill="clear" shape="round">
+        -1
+      </ion-button>
+      <ion-button style="width: auto; margin-left: 2%; color: white;" (click)="calculateHp(-5)" expand="block"
+        fill="clear" shape="round">
+        -5
+      </ion-button>
+      <ion-button style="width: auto; margin-left: 2%; color: white;" (click)="calculateHp(+5)" expand="block"
+        fill="clear" shape="round">
+        +5
+      </ion-button>
+      <ion-button style="width: auto; margin-left: 2%; color: white;" (click)="calculateHp(+1)" expand="block"
+        fill="clear" shape="round">
+        +1
+      </ion-button>
+    </div>
+
+  </ion-card-content>
+</ion-card>

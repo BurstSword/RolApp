@@ -20,6 +20,7 @@ export interface Status{
 
 export interface Attack{
     name:string,
+    description:string,
     dices:Dice[]
 }
 
@@ -29,6 +30,7 @@ export interface Dice{
 }
 
 export interface Game{
+    uid:string,
     name:string,
     entities:Entity[],
 }

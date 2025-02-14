@@ -7,5 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
- 
+  <div *ngFor="let item of entities">
+    <app-entity-card [entity]="item"></app-entity-card>
+  </div>
 </ion-content>
